@@ -78,7 +78,7 @@ body{
 .hero-bg > .top-strip,
 .hero-bg > .bottom-strip,
 .first-section > .bottom-strip {
-    background: none;
+    background: #F6B1BA;
 }
 
 .flow-marquee {
@@ -97,13 +97,26 @@ body{
     backface-visibility: hidden;
 }
 
+/* Edge strips: real text tiles (not a PNG) so the loop never splits a word */
 .flow-marquee__chunk {
     height: 100%;
-    width: 100vw;
-    min-width: 1200px;
+    width: max-content;
+    min-width: 0;
     flex-shrink: 0;
-    background: url("./assets/background-strip-top.png") repeat-x;
-    background-size: auto 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    background: #F6B1BA;
+    font-family: "M PLUS 1p", "IBM Plex Sans JP", sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: #fff;
+    line-height: 28px;
+    -webkit-font-smoothing: antialiased;
 }
 
 .top-left-image-wrapper{
@@ -247,27 +260,29 @@ body{
     row-gap: 16px;
     flex-direction: column;
     align-items: center;
-        position: absolute;
+    position: absolute;
     bottom: -30px;
+    overflow: visible;
+    padding-top: 18px;
 }
 
 
-.first-section .pc-hero-cta-wrapper .pc-hero-cta span{
+.first-section .pc-hero-cta-wrapper .pc-hero-cta .span-btns span{
     opacity: 0;
     transform: translateY(30px);
     
     animation: fadeUp .8s ease-out forwards;
 }
-.first-section .pc-hero-cta-wrapper .pc-hero-cta span:nth-of-type(1){
+.first-section .pc-hero-cta-wrapper .pc-hero-cta .span-btns span:nth-of-type(1){
     animation-delay: .5s;
 }
-.first-section .pc-hero-cta-wrapper .pc-hero-cta span:nth-of-type(2){
+.first-section .pc-hero-cta-wrapper .pc-hero-cta .span-btns span:nth-of-type(2){
     animation-delay: .8s;
 }
-.first-section .pc-hero-cta-wrapper .pc-hero-cta span:nth-of-type(3){
+.first-section .pc-hero-cta-wrapper .pc-hero-cta .span-btns span:nth-of-type(3){
     animation-delay: 1s;
 }
-.first-section .pc-hero-cta-wrapper .pc-hero-cta span:nth-of-type(4){
+.first-section .pc-hero-cta-wrapper .pc-hero-cta .span-btns span:nth-of-type(4){
     animation-delay: 1.2s;
 }
 
@@ -286,7 +301,7 @@ body{
 }
 .pc-hero-cta button,
 .pc-hero-cta .hero-cta-btn{
-    box-shadow: 2px 2px;
+    /* shadow owned by .hero-cta-btn glossy stack */
 }
 .span-btns span:nth-of-type(1){
     width: 93px;
@@ -317,17 +332,8 @@ text-align: center;
 vertical-align: middle;
 }
 
-.pc-hero-cta button,
-.pc-hero-cta .hero-cta-btn{
+.left-content .hero-cta-btn {
     width: 353px;
-    height: 57px;
-    background-color: #FFE309;
-    border-radius: 40px;
-font-weight: 700;
-font-size: 24px;
-letter-spacing: 2%;
-text-align: center;
-vertical-align: middle;
 }
 
 main{
@@ -443,6 +449,28 @@ main::-webkit-scrollbar{
     z-index: 1;
 } 
 
+/* Footer gear — always centered between the two text blocks */
+.middle_area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 16px 0;
+    padding: 0;
+    height: auto;
+    position: relative;
+}
+
+.bottom_ring{
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: 0 auto;
+    position: static;
+    transform: none;
+    flex-shrink: 0;
+}
+
 .first-section .pc-hero-cta{
     bottom: 0px;
     width: 100%;
@@ -450,7 +478,17 @@ main::-webkit-scrollbar{
 }
 .first-section .pc-hero-cta button,
 .first-section .pc-hero-cta .hero-cta-btn{
-     width: 295px !important;
+     width: 320px !important;
+     max-width: calc(100% - 24px);
+}
+
+.first-section .pc-hero-cta .hero-cta-btn__label {
+    font-size: 13px;
+}
+
+.first-section .pc-hero-cta .hero-cta-btn__line {
+    width: 30px;
+    height: 30px;
 }
 
 
@@ -545,11 +583,12 @@ main::-webkit-scrollbar{
 }
     
     .second-section::before {
-          content: "";
+    content: "";
     position: absolute;
     inset: 0;
+    opacity: 0.4;
     background: url(./assets/pc-background.jpg) center / auto repeat;
-    opacity: 55%;
+    opacity: 17%;
     z-index: -1;
     background-size: cover;
     }
@@ -1249,6 +1288,8 @@ position: absolute;
     transform: translateY(-80px);
     position: relative;
     z-index: 2;
+    overflow: visible;
+    padding-top: 18px;
 }
 
 .overlay{
@@ -1519,11 +1560,19 @@ z-index: 2;
     font-size: 16px;
     text-align: center;
     position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     transform: translate(0px, 12px);
 
 }
 .footer-heading img{
     width: 365px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    margin: 0 auto;
 }
 /* .footer-heading h2:nth-of-type(1){
     line-height: 30px;
@@ -1540,11 +1589,25 @@ z-index: 2;
 
 } */
 .footer-text{
-     position: relative;
-    transform: translate(0, 100px);
+   position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 30%;
+    transform: none;
     font-size: 14px;
     text-align: center;
     font-weight: 600;
+    line-height: 1.75;
+}
+
+.footer-text > p{
+    margin: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .footer-girls .girls{
@@ -1570,10 +1633,6 @@ z-index: 2;
 
 
 
-.footer-text p:nth-of-type(2){
-        transform: translateY(18px);
-}
-
 .footer-highlight{
     color: #F2687A;
 }
@@ -1584,6 +1643,8 @@ z-index: 2;
     transform: translateX(-50%);
     z-index: 3;
     width: fit-content;
+    overflow: visible;
+    padding-top: 18px;
 }
 
 .footer-heading .fade-up{
@@ -1598,18 +1659,26 @@ z-index: 2;
 }
 
 .footer-star{
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    top: 48px;
+    left: 50%;
+    margin-left: -14px;
+    pointer-events: none;
+    z-index: 2;
     transform-origin: center center;
     will-change: transform, filter, opacity;
     animation: footerStarTwinkle 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
     backface-visibility: hidden;
 }
 
-.footer-text-flower{
+/* .footer-text-flower{
     transform-origin: center center;
     will-change: transform, filter;
     animation: footerFlowerBreath 5.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
     backface-visibility: hidden;
-}
+} */
 
 .footer-girls .photo-left{
     will-change: transform;
@@ -1721,18 +1790,19 @@ z-index: 2;
         width: 90px;
         transform: rotate(0deg) translate(-15px, 8px);
 }
+
 .footer-heading{
         font-size: 15px;
 }
 .footer-text{
-        transform: translate(0, 160px);
-
+        margin-top: 30%;
 }
 .footer-heading img{
         width: 95%;
-        position: absolute;
-        left: 5%;
-        margin-top: -10px;
+        max-width: 100%;
+        position: relative;
+        left: auto;
+        margin-top: 0;
 }
 .second-section-girls{
     transform: translateY(45px);
@@ -1799,16 +1869,15 @@ z-index: 2;
 }
         .footer-heading img {
         width: 95%;
-        position: absolute;
-        left: 5%;
-        margin-top: 0px;
+        max-width: 100%;
+        position: relative;
+        left: auto;
+        margin-top: 0;
     }
         .footer-text {
-        transform: translate(0, 135px);
+        margin-top: 36%;
+        transform: none;
     }
-    .footer-text p:nth-of-type(2) {
-    transform: translateY(0px);
-}
 .cta-slot--footer{
         left: 50%;
         transform: translateX(-50%);
@@ -1852,32 +1921,156 @@ z-index: 2;
 
 .hero-cta-btn {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     border: none;
     cursor: pointer;
     isolation: isolate;
     -webkit-tap-highlight-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 18px 0 22px;
+    box-sizing: border-box;
+    height: 57px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    /* Exact greens sampled from reference */
+    background-color: #38CE74;
+    background-image:
+        radial-gradient(ellipse 90% 85% at 50% -10%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.18) 38%, rgba(255, 255, 255, 0) 68%),
+        linear-gradient(180deg, #6DEB9D 0%, #4DD47D 22%, #38CE74 58%, #36CB71 100%);
+    box-shadow:
+        0 4px 10px rgba(56, 100, 80, 0.18),
+        0 1px 0 rgba(255, 255, 255, 0.35) inset,
+        0 -2px 0 rgba(24, 140, 80, 0.22) inset;
+}
+
+.hero-cta-btn__badge {
+    position: absolute;
+    top: -22px;
+    left: 8px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    color: #FE7A8E;
+    font-family: "IBM Plex Sans JP", "M PLUS 1p", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 6px, 0) scale(0.92);
+    pointer-events: none;
+    box-shadow: none;
+    transition:
+        opacity 0.22s ease,
+        transform 0.22s cubic-bezier(0.22, 1.2, 0.36, 1),
+        visibility 0.22s ease;
+}
+
+/* SVG draws one continuous speech-bubble outline — no joined square/tail seams */
+.hero-cta-btn__badge-shape {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.hero-cta-btn__badge-text {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-top: 5px; /* center in pill body; tail occupies SVG bottom */
+    color: #FE7A8E;
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: 1;
+}
+
+/* Remove old ::before/::after diamond/triangle hacks */
+.hero-cta-btn__badge::before,
+.hero-cta-btn__badge::after {
+    content: none;
+    display: none;
+}
+
+/* Keep badge hidden until hover even when parent forces opacity */
+.first-section .pc-hero-cta .hero-cta-btn .hero-cta-btn__badge,
+.left-content .hero-cta-btn .hero-cta-btn__badge,
+.cta-slot .hero-cta-btn .hero-cta-btn__badge {
+    opacity: 0 !important;
+    visibility: hidden;
+}
+
+.first-section .pc-hero-cta .hero-cta-btn:hover .hero-cta-btn__badge,
+.first-section .pc-hero-cta .hero-cta-btn:focus-visible .hero-cta-btn__badge,
+.left-content .hero-cta-btn:hover .hero-cta-btn__badge,
+.left-content .hero-cta-btn:focus-visible .hero-cta-btn__badge,
+.cta-slot .hero-cta-btn:hover .hero-cta-btn__badge,
+.cta-slot .hero-cta-btn:focus-visible .hero-cta-btn__badge {
+    opacity: 1 !important;
+    visibility: visible;
+    transform: translate3d(0, 0, 0) scale(1);
 }
 
 .hero-cta-btn__label {
     position: relative;
     z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #ffffff;
+    font-family: "IBM Plex Sans JP", "M PLUS 1p", sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-shadow: 0 1px 0 rgba(20, 110, 60, 0.25);
+    white-space: nowrap;
+}
+
+.hero-cta-btn__chevron {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    margin-left: 2px;
+    border-right: 2px solid #ffffff;
+    border-top: 2px solid #ffffff;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+}
+
+.hero-cta-btn__line {
+    position: relative;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: block;
+    object-fit: contain;
+    margin-left: 4px;
+    image-rendering: auto;
 }
 
 .hero-cta-btn__shine {
-    position: absolute;
-    inset: -20% -40%;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-        115deg,
-        transparent 35%,
-        rgba(255, 255, 255, 0.55) 48%,
-        rgba(255, 240, 250, 0.35) 52%,
-        transparent 65%
-    );
-    transform: translate3d(-60%, 0, 0) skewX(-18deg);
-    opacity: 0;
+    display: none;
 }
 
 /* ---- Logo bloom (right fixed): living aura + hover magical burst ---- */
@@ -2341,7 +2534,8 @@ z-index: 2;
         transform 0.5s cubic-bezier(0.22, 1.35, 0.36, 1),
         box-shadow 0.4s ease,
         filter 0.4s ease,
-        background-color 0.4s ease;
+        background-color 0.4s ease,
+        background-image 0.4s ease;
     animation: ctaIdleFloat 3.6s ease-in-out infinite;
     will-change: transform, filter;
 }
@@ -2350,17 +2544,22 @@ z-index: 2;
 .first-section .pc-hero-cta .hero-cta-btn.anim-ready:hover,
 .cta-slot .hero-cta-btn:hover {
     animation-play-state: paused;
-    transform: translate3d(0, -4px, 0) scale(1.03);
-    box-shadow: 4px 6px rgba(44, 44, 44, 0.35);
-    filter: brightness(1.05) saturate(1.06);
-    background-color: #ffe85a;
+    transform: translate3d(0, -3px, 0) scale(1.02);
+    box-shadow:
+        0 7px 14px rgba(56, 100, 80, 0.22),
+        0 1px 0 rgba(255, 255, 255, 0.4) inset,
+        0 -2px 0 rgba(24, 140, 80, 0.22) inset;
+    filter: brightness(1.03) saturate(1.04);
+    background-color: #38CE74;
+    background-image:
+        radial-gradient(ellipse 90% 85% at 50% -10%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 38%, rgba(255, 255, 255, 0) 68%),
+        linear-gradient(180deg, #78F0A8 0%, #52DA86 22%, #3AD27A 58%, #36CB71 100%);
 }
 
 .left-content .hero-cta-btn:hover .hero-cta-btn__shine,
 .first-section .pc-hero-cta .hero-cta-btn.anim-ready:hover .hero-cta-btn__shine,
 .cta-slot .hero-cta-btn:hover .hero-cta-btn__shine {
-    opacity: 1;
-    animation: ctaShine 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    display: none;
 }
 
 .left-content .hero-cta-btn:active,
@@ -2371,22 +2570,21 @@ z-index: 2;
     transition-duration: 0.08s;
 }
 
-/* Section CTAs match first-view in-column yellow button visuals */
+/* Section CTAs — same LINE green pill as first-view */
 .cta-slot .hero-cta-btn {
-    width: 295px;
+    width: 320px;
     height: 57px;
-    background-color: #FFE309;
-    border-radius: 40px;
+    border-radius: 999px;
     font-weight: 700;
-    font-size: 24px;
-    letter-spacing: 2%;
+    font-size: 15px;
+    letter-spacing: 0.02em;
     text-align: center;
     vertical-align: middle;
-    box-shadow: 2px 2px;
     border: none;
+    color: #ffffff;
 }
 
-.first-section .pc-hero-cta-wrapper .pc-hero-cta span.anim-ready,
+.first-section .pc-hero-cta-wrapper .pc-hero-cta .span-btns span.anim-ready,
 .first-section .pc-hero-cta .span-btns span.anim-ready {
     opacity: 1;
     cursor: pointer;
@@ -2799,4 +2997,133 @@ z-index: 2;
     .hero-cta-btn__shine {
         display: none;
     }
+}
+
+/* ============================================================
+   Desktop (PC) performance — min-width 768px only.
+   SP (max-width: 767px) is untouched: no selectors here apply.
+   Keep: button hover / press / idle, flow-marquee + incubation
+   scroll-linked system. Disable every other motion layer.
+   ============================================================ */
+@media (min-width: 768px) {
+    /* Scroll / entrance reveals → final layout state, no tween */
+    .fade-up {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /* First-view CTA entrance (fadeUp) — skip until .anim-ready owns motion */
+    .first-section .pc-hero-cta-wrapper .pc-hero-cta .span-btns span:not(.anim-ready),
+    .first-section .pc-hero-cta-wrapper .pc-hero-cta .hero-cta-btn:not(.anim-ready),
+    .first-section .pc-hero-cta .span-btns span:not(.anim-ready),
+    .first-section .pc-hero-cta .hero-cta-btn:not(.anim-ready) {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Decorative / continuous / hover-burst — frozen */
+    .vector-content .vector-image,
+    .vector-content .vector-text,
+    .first-section-decors img,
+    .first-section-dot,
+    .first-section-bottom-dot,
+    .section-logo,
+    .bg-logo-wrapper img,
+    .logo-bloom__aura,
+    .logo-bloom__ripple,
+    .logo-bloom__glow,
+    .logo-bloom__rays,
+    .logo-bloom__burst,
+    .new-tag,
+    .flower.top,
+    .flower.bottom,
+    .heading-gear,
+    .flower.top.heading-gear,
+    .flower.top.heading-gear.is-gear-hot,
+    .flower.top.heading-gear.is-gear-easing,
+    .second-heading:hover ~ .heading-gear,
+    .second-section-girls-wrapper .decors img,
+    .second-section-girls-wrapper .ellipse,
+    .target-decor img,
+    .footer-star,
+    .footer-text-flower,
+    .footer-girls .photo-left,
+    .footer-girls .photo-right {
+        animation: none !important;
+        transition: none !important;
+        will-change: auto;
+    }
+
+    .vector-content .vector-image,
+    .vector-content .vector-text {
+        opacity: 1;
+        filter: none;
+        transform: none;
+    }
+
+    .bg-logo-wrapper img,
+    .bg-logo-wrapper.is-logo-hot img,
+    .bg-logo-wrapper.is-logo-fading img,
+    .bg-logo-wrapper:hover img,
+    .bg-logo-wrapper:has(img:hover) img {
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+        will-change: auto;
+    }
+
+    .logo-bloom__aura,
+    .logo-bloom__ripple,
+    .logo-bloom__glow,
+    .logo-bloom__rays,
+    .logo-bloom__burst,
+    .bg-logo-wrapper.is-logo-hot .logo-bloom__aura,
+    .bg-logo-wrapper.is-logo-hot .logo-bloom__ripple,
+    .bg-logo-wrapper.is-logo-hot .logo-bloom__glow,
+    .bg-logo-wrapper.is-logo-hot .logo-bloom__rays,
+    .bg-logo-wrapper.is-logo-hot .logo-bloom__burst,
+    .bg-logo-wrapper:hover .logo-bloom__aura,
+    .bg-logo-wrapper:hover .logo-bloom__ripple,
+    .bg-logo-wrapper:hover .logo-bloom__glow,
+    .bg-logo-wrapper:hover .logo-bloom__rays,
+    .bg-logo-wrapper:hover .logo-bloom__burst,
+    .bg-logo-wrapper:has(img:hover) .logo-bloom__aura,
+    .bg-logo-wrapper:has(img:hover) .logo-bloom__ripple,
+    .bg-logo-wrapper:has(img:hover) .logo-bloom__glow,
+    .bg-logo-wrapper:has(img:hover) .logo-bloom__rays,
+    .bg-logo-wrapper:has(img:hover) .logo-bloom__burst {
+        opacity: 0 !important;
+        animation: none !important;
+    }
+
+    .new-tag {
+        filter: none;
+        transform: none;
+    }
+
+    .flower.top.heading-gear,
+    .flower.top.heading-gear.is-gear-hot,
+    .flower.top.heading-gear.is-gear-easing,
+    .second-heading:hover ~ .heading-gear,
+    .flower.bottom {
+        filter: none !important;
+        transform: none;
+    }
+
+    .target-item img {
+        transition: none !important;
+        will-change: auto;
+    }
+
+    .target-item:hover img {
+        transform: translateZ(0) scale(1);
+    }
+
+    /*
+      Exceptions intentionally NOT listed above (still animate on PC):
+      - .hero-cta-btn / .span-btns (hover, press, idle float, shine, chip breath)
+      - .left-content and .cta-slot button motion
+      - .flow-marquee__inner (incubation bands + edge strips, JS scroll boost)
+    */
 }

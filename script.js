@@ -1,20 +1,28 @@
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* PC vs SP: desktop gets static decorative motion; SP keeps full animation path. */
+const isDesktopPc = window.matchMedia("(min-width: 768px)").matches;
 
-/* Existing scroll-reveal */
-const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-            observer.unobserve(entry.target);
-        }
+/* Existing scroll-reveal — SP unchanged; PC jumps to final .show state (no fade/slide). */
+if (isDesktopPc) {
+    document.querySelectorAll(".fade-up").forEach(el => {
+        el.classList.add("show");
     });
-}, {
-    threshold: 0.25
-});
+} else {
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.25
+    });
 
-document.querySelectorAll(".fade-up").forEach(el => {
-    observer.observe(el);
-});
+    document.querySelectorAll(".fade-up").forEach(el => {
+        observer.observe(el);
+    });
+}
 
 /* Mark first-view CTAs ready after entrance so hover/breathe can own transform */
 function armAnimReady(el) {
@@ -31,14 +39,22 @@ function armAnimReady(el) {
     window.setTimeout(enable, 2600);
 }
 
-document.querySelectorAll(".first-section .pc-hero-cta .span-btns span, .first-section .pc-hero-cta .hero-cta-btn")
-    .forEach(armAnimReady);
+const firstViewCtas = document.querySelectorAll(
+    ".first-section .pc-hero-cta .span-btns span, .first-section .pc-hero-cta .hero-cta-btn"
+);
+if (isDesktopPc) {
+    /* Skip entrance wait on PC — keep button hover / idle / press immediately. */
+    firstViewCtas.forEach(el => el.classList.add("anim-ready"));
+} else {
+    firstViewCtas.forEach(armAnimReady);
+}
 
 /* ------------------------------------------------------------
    Fixed logo — hover burst with graceful fade-out
+   (SP only — decorative; disabled on PC for paint performance)
    ------------------------------------------------------------ */
 (function initLogoMotion() {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || isDesktopPc) return;
 
     const wrap = document.querySelector(".bg-logo-wrapper");
     const img = wrap?.querySelector("img");
@@ -68,9 +84,10 @@ document.querySelectorAll(".first-section .pc-hero-cta .span-btns span, .first-s
 
 /* ------------------------------------------------------------
    Heading gear — accelerate on heading hover, ease out on leave
+   (SP only — decorative; disabled on PC for paint performance)
    ------------------------------------------------------------ */
 (function initHeadingGear() {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || isDesktopPc) return;
 
     const trigger = document.querySelector("[data-gear-trigger]");
     const gear = document.querySelector(".heading-gear");
@@ -95,6 +112,7 @@ document.querySelectorAll(".first-section .pc-hero-cta .span-btns span, .first-s
 
 /* ------------------------------------------------------------
    Unified flow strips — seamless marquee + scroll acceleration
+   Kept on PC and SP (incubation bands + scroll-linked boost).
    ------------------------------------------------------------ */
 (function initFlowMarquees() {
     if (prefersReducedMotion) return;

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 32" fill="none" aria-hidden="true">
+  <!-- One path = pill body + tail. Stroke follows the outer silhouette only. -->
+  <path
+    fill="#FFFFFF"
+    stroke="#FE7A8E"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+    d="M14.75 1.75
+       H64.25
+       A11.25 11.25 0 0 1 64.25 24.25
+       H51.5
+       L46.75 30.5
+       L42 24.25
+       H14.75
+       A11.25 11.25 0 0 1 14.75 1.75
+       Z"/>
+</svg>
